@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  user-profile-api:
+    build:
+      target: build
+      args:
+        - NODE_ENV=development
+        - NPM_TOKEN=${NPM_TOKEN}
+    volumes:
+      - ./packages/rgaxuk-user-profile-api/src/:/usr/src/app/src
+      - ./packages/rgaxuk-user-profile-api/public/:/usr/src/app/public
+      - ./packages/rgaxuk-user-profile-api/config/:/usr/src/app/config
+    ports:
+        - 7030:7030
+    environment:
+      PORT: 7030
+      HOST: 0.0.0.0
+      MONGO_CONNECTION_STRING: '${MONGO_CONNECTION_STRING}/user-profile'
+    command: ["npm", "run", "dev"]
+    container_name: user-profile-api
+  mongodb:
+    logging:
+      driver: none
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    container_name: nigel-mongodb

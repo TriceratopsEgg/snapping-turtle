@@ -1,0 +1,25 @@
+version: "3.7"
+
+networks:
+  snapping-turtle-internal-network:
+  snapping-turtle-database-network:
+
+services:
+  user-profile-api:
+    image: snapping-turtle/user-profile-api
+    build:
+      context: ./services/user-profile-api
+    networks:
+      - snapping-turtle-internal-network
+      - snapping-turtle-database-network
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - snapping-turtle-database-network
+
+volumes:
+  mongo-data:
