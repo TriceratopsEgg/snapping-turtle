@@ -1,6 +1,6 @@
 # user-profile-api
 
-> User management service
+> User profile management API
 
 ## About
 

@@ -9,7 +9,7 @@
   "authentication": {
     "entity": "user",
     "service": "users",
-    "secret": "xXuwqm5LqvaBOc60JeTTbjO3Mps=",
+    "secret": "3vrMgzK7CW7MgzpQJiigPvosejU=",
     "authStrategies": [
       "jwt",
       "local"
@@ -44,5 +44,5 @@
       }
     }
   },
-  "mongodb": "mongodb://localhost:27017/user_profile"
+  "mongodb": "mongodb://localhost:27017/user_profile_api"
 }
