@@ -71,8 +71,6 @@ module.exports = {
             'error',
             {
                 allowModules: [
-                    '@entelectsoftwaresa/rgaxuk-common',
-                    '@entelectsoftwaresa/rgaxuk-encryption'
                 ]
             }
         ],

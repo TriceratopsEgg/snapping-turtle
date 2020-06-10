@@ -163,7 +163,6 @@ project.xcworkspace
 .gradle
 local.properties
 *.iml
-packages/rgaxuk-native-app/ios/Pods/Local Podspecs/A0Auth0.podspec.json
 
 
 # Docker

@@ -7,9 +7,9 @@ services:
         - NODE_ENV=development
         - NPM_TOKEN=${NPM_TOKEN}
     volumes:
-      - ./packages/rgaxuk-user-profile-api/src/:/usr/src/app/src
-      - ./packages/rgaxuk-user-profile-api/public/:/usr/src/app/public
-      - ./packages/rgaxuk-user-profile-api/config/:/usr/src/app/config
+      - ./services/user-profile-api/src/:/usr/src/app/src
+      - ./services/user-profile-api/public/:/usr/src/app/public
+      - ./services/user-profile-api/config/:/usr/src/app/config
     ports:
         - 7030:7030
     environment:
@@ -26,4 +26,4 @@ services:
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
-    container_name: nigel-mongodb
+    container_name: mongodb
