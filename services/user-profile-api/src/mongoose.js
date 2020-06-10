@@ -6,7 +6,7 @@ module.exports = function(app) {
     .connect(app.get('mongodb'), { useCreateIndex: true, useNewUrlParser: true })
     .catch(err => {
       logger.error(err);
-      process.exit(1);
+      // process.exit(1);
     });
 
   mongoose.Promise = global.Promise;
