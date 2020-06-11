@@ -3,7 +3,7 @@ const userProfileAPI = require('../apis/user-profile-api');
 
 const registerUser = async (firstname, surname, email, password, setErrorData) => {
     const users = userProfileAPI(null).service('users');
-    const response = await users.create({
+    await users.create({
         strategy: 'local',
         firstname,
         surname,

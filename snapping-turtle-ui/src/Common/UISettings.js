@@ -1,7 +1,7 @@
 const colours = {
-    primary: '#E6E6E6',
-    secondary: '#AA80FF',
-    highlight: '#00FFFB',
+    primaryAlt: '#E6E6E6',
+    primary: '#AA80FF',
+    secondary: '#00FFFB',
     contrasting: '#85ABFF'
 };
 

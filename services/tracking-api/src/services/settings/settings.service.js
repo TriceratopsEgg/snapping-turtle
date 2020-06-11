@@ -3,7 +3,7 @@ const { Settings } = require('./settings.class');
 const createModel = require('../../models/settings.model');
 const hooks = require('./settings.hooks');
 
-module.exports = function (app) {
+module.exports = function(app) {
   const options = {
     Model: createModel(app),
     paginate: app.get('paginate')

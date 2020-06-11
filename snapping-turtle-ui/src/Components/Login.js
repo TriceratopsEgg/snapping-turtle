@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { TextField, Button, FormLabel, Paper } from '@material-ui/core';
+import { TextField, Button, FormLabel, Paper, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import userProfileAPI from '../apis/user-profile-api';
 const { colours } = require('../Common/UISettings');
 const { authenticateUser } = require('../Common/AuthenticationUtils');
 const { registerUser } = require ('../Common/UserUtils');
 
 const useStyles = makeStyles((theme) => ({
+    
     form: {
         width: '300px',
         position: 'absolute',
@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
         width: '280px'
     },
     button: {
-        margin: '10px',
-        backgroundColor: colours.secondary,
-        color: colours.primary
+        margin: '10px'
     },
     errorLabel: {
         color: 'salmon'
@@ -30,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-        backgroundColor: colours.primary,
         width: '320px',
         position: 'absolute',
         top: '50%',
@@ -135,8 +132,8 @@ const Login = props => {
                 <TextField onChange={ handleEmailChange } className={ classes.textField } label="Email" value={email} />
                 <TextField onChange={ handlePasswordChange } className={ classes.textField } label="Password" type="password" value={password} />
                 <TextField onChange={ handleCheckPasswordChange } className={ classes.textField } label="Confirm Password" type="password" value={checkPassword} />
-                <Button onClick={ handleRegistering } className={ classes.button } variant="outlined">Register</Button>
-                <Button onClick={ handleRegisterClick } className={ classes.button } variant='outlined'>Cancel</Button>
+                <Button onClick={ handleRegistering } className={ classes.button } color="primary"  variant="outlined">Register</Button>
+                <Button onClick={ handleRegisterClick } className={ classes.button }  color="primary" variant='outlined'>Cancel</Button>
             </Paper>
         );
     } else {
@@ -146,8 +143,8 @@ const Login = props => {
                 {registerSuccess ? showSuccess : null}
                 <TextField onChange={ handleEmailChange } className={ classes.textField } label="Email" value={email} />
                 <TextField onChange={ handlePasswordChange } className={ classes.textField } label="Password" type="password" value={password} />
-                <Button onClick={ handleLogin } className={ classes.button } variant="contained">Login</Button>
-                <Button onClick={ handleRegisterClick } className={ classes.button } variant='contained'>Register</Button>
+                <Button onClick={ handleLogin } className={ classes.button } color="primary" variant="contained">Login</Button>
+                <Button onClick={ handleRegisterClick } className={ classes.button } color="primary"  variant="contained">Register</Button>
             </Paper>
         );
     }    
