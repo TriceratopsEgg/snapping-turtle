@@ -14,6 +14,15 @@ services:
       - snapping-turtle-database-network
     depends_on:
       - mongodb
+  tracking-api:
+    image: snapping-turtle/tracking-api
+    build:
+      context: ./services/tracking-api
+    networks:
+      - snapping-turtle-internal-network
+      - snapping-turtle-database-network
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo:latest
     volumes:

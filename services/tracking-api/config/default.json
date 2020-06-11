@@ -1,15 +1,15 @@
 {
   "host": "localhost",
-  "port": 3030,
+  "port": 7031,
   "public": "../public/",
   "paginate": {
     "default": 10,
     "max": 50
   },
   "authentication": {
-    "entity": "user",
+    "entity": null,
     "service": "users",
-    "secret": "8uow+lbTRdmMlIqMsGNy9oXM0O8=",
+    "secret": "3vrMgzK7CW7MgzpQJiigPvosejU=",
     "authStrategies": [
       "jwt",
       "local"
@@ -28,5 +28,5 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb://localhost:27017/tracking_api"
+  "mongodb": "MONGO_CONNECTION_STRING"
 }

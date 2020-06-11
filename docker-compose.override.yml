@@ -18,6 +18,24 @@ services:
       MONGO_CONNECTION_STRING: '${MONGO_CONNECTION_STRING}/user-profile'
     command: ["npm", "run", "dev"]
     container_name: user-profile-api
+  tracking-api:
+    build:
+      target: build
+      args:
+        - NODE_ENV=development
+        - NPM_TOKEN=${NPM_TOKEN}
+    volumes:
+      - ./services/tracking-api/src/:/usr/src/app/src
+      - ./services/tracking-api/public/:/usr/src/app/public
+      - ./services/tracking-api/config/:/usr/src/app/config
+    ports:
+        - 7031:7031
+    environment:
+      PORT: 7031
+      HOST: 0.0.0.0
+      MONGO_CONNECTION_STRING: '${MONGO_CONNECTION_STRING}/tracking'
+    command: ["npm", "run", "dev"]
+    container_name: tracking-api
   mongodb:
     logging:
       driver: none
