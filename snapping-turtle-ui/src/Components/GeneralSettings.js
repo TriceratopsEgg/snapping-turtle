@@ -1,111 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Typography, Fab, FormControlLabel, FormControl, FormLabel, FormGroup, Checkbox, Modal } from '@material-ui/core';
+import { 
+    Grid,
+    Modal
+ } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {Add as AddIcon} from '@material-ui/icons';
+
+import Hours from './GeneralSettings/Hours';
+import BreakWarningIntervals from './GeneralSettings/BreakWarningIntervals';
+import ProjectCategories from './GeneralSettings/ProjectCategories';
+import DaysInputModal from './GeneralSettings/DaysInputModal';
+import ProjectCategoryModal from './GeneralSettings/ProjectCategoryModal';
 
 import { getGeneralSettings } from '../Common/TrackingSettings';
-import { daysOfWeek } from '../Common/GeneralUtils';
-
-function rand() {
-    return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
-  
-    return {
-      top: `${top}%`,
-      left: `${left}%`,
-      transform: `translate(-${top}%, -${left}%)`,
-    };
-  }
+import { timeTypes } from '../Common/GeneralUtils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'left',
-      display: 'flex',
-      flexDirection: 'column'
-    },    
-    fab: {
-        alignSelf: 'flex-end'
-    },
-    formControl: {
-      margin: theme.spacing(3),
-    },
-    modalPaper: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-      }
+        flexGrow: 1,
+    }
 }));
 
 const GeneralSettings = props => {
     const classes = useStyles();
 
-    const [modalStyle] = useState(getModalStyle);
     const [generalSettings, setGeneralSettings] = useState({});
 
     useEffect(() => {
         getGeneralSettings()
         .then(response => {
-            console.log(response);
             setGeneralSettings(response);
         });
     }, []);
     
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => {
-      setOpen(!open);
-    };
-
-    const modalBody = (
-        <Paper style={modalStyle} className={classes.modalPaper}>
-            <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Select applicable days</FormLabel>
-                <FormGroup>
-                    {daysOfWeek.map(dow => { return <FormControlLabel control={<Checkbox name={dow.day} />} label={dow.day} />})}
-                </FormGroup>
-            </FormControl>
-        </Paper>
-    );
+    const [modalSettings, setModalSettings] = React.useState({open: false, type: ''});
+    const handleOpen = (type) => {
+        setModalSettings({ open: !modalSettings.open, type: type });
+    };  
 
     return (
         <div className={classes.root}>
             <Grid container spacing={3}>
-                <Grid item xs={6}>
-                    <Paper elevation={4} className={classes.paper}>
-                        <Typography>Work Hours</Typography>
-                        <Fab onClick={handleOpen} className={classes.fab} size="small" color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab>
-                        <Modal
-                            open={open}
-                            onClose={handleOpen}
-                            aria-labelledby="simple-modal-title"
-                            aria-describedby="simple-modal-description"
-                        >
-                            {modalBody}
-                        </Modal>
-                    </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                    <Paper elevation={4} className={classes.paper}>
-                        <Typography>Sleep Hours</Typography>
-                        <Fab className={classes.fab} size="small" color="primary" aria-label="add">
-                            <AddIcon />
-                        </Fab>
-                    </Paper>
-                </Grid>
+                {timeTypes.map(tt => {
+                    return (
+                        <Hours 
+                            key={tt}
+                            type={tt} 
+                            generalSettings={generalSettings} 
+                            setGeneralSettings={setGeneralSettings}
+                            handleOpen={handleOpen} />
+                    );
+                })}
+                <BreakWarningIntervals 
+                    generalSettings={generalSettings} 
+                    setGeneralSettings={setGeneralSettings} />
+                <ProjectCategories
+                    generalSettings={generalSettings} 
+                    setGeneralSettings={setGeneralSettings}
+                    handleOpen={handleOpen} />
             </Grid>
+            <Modal
+                open={modalSettings.open}
+                onClose={() => handleOpen('')}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                {modalSettings.type === 'projectCategories' 
+                    ? <ProjectCategoryModal
+                        generalSettings={generalSettings} 
+                        setGeneralSettings={setGeneralSettings}
+                        setModalSettings={setModalSettings} /> 
+                    : <DaysInputModal
+                        generalSettings={generalSettings} 
+                        setGeneralSettings={setGeneralSettings}
+                        setModalSettings={setModalSettings}
+                        type={modalSettings.type} />}
+            </Modal>
         </div>
     );
 }

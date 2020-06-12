@@ -8,6 +8,12 @@ const daysOfWeek = [
     {day: 'Sunday', value: 6},
 ];
 
+const timeTypes = [
+    'work',
+    'sleep'
+]
+
 module.exports = {
-    daysOfWeek
+    daysOfWeek,
+    timeTypes
 }

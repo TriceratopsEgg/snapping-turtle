@@ -12,15 +12,15 @@ module.exports = function(app) {
       workHours: [
         {
           day: { type: Number, required: true },
-          startTime: { type: Number, required: true },
-          endTime: { type: Number, required: true }
+          startTime: { type: String, required: true },
+          endTime: { type: String, required: true }
         }
       ],
       sleepHours: [
         {
           day: { type: Number, required: true },
-          startTime: { type: Number, required: true },
-          endTime: { type: Number, required: true }
+          startTime: { type: String, required: true },
+          endTime: { type: String, required: true }
         }
       ],
       breakIntervals: {
