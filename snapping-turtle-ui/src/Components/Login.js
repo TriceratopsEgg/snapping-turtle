@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { TextField, Button, FormLabel, Paper, Grid } from '@material-ui/core';
+import { TextField, Button, FormLabel, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-const { colours } = require('../Common/UISettings');
 const { authenticateUser } = require('../Common/AuthenticationUtils');
 const { registerUser } = require ('../Common/UserUtils');
 

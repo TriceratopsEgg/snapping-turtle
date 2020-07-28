@@ -8,7 +8,7 @@ import { colours } from './Common/UISettings'
 
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    type: 'main',
     primary: {
       main: colours.primary,
       dark: colours.primary

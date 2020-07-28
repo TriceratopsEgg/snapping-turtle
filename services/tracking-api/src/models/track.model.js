@@ -1,23 +1,23 @@
-// projects-model.js - A mongoose model
+// track-model.js - A mongoose model
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
 module.exports = function(app) {
-  const modelName = 'projects';
+  const modelName = 'track';
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const schema = new Schema(
     {
       userId: { type: String, required: true },
-      name: { type: String, required: true },
+      inProgress: { type: Boolean, required: true },
+      start: { type: Date, required: true },
+      end: { type: Date },
       category: { type: String },
-      workRelated: { type: Boolean, required: true },
-      taskTypes: [
-        {
-          taskDescription: { type: String, required: true },
-          requireAdditionalDescription: { type: Boolean, required: true }
-        }
-      ]
+      project: { type: String, required: true },
+      task: { type: String, required: true },
+      requireDescription: { type: Boolean, required: true },
+      description: { type: String },
+      workRelated: { type: Boolean, required: true }
     },
     {
       timestamps: true

@@ -4,13 +4,13 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { List, Divider, ListItem, ListItemText, ListItemIcon, Drawer, CssBaseline, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { Dashboard, Assessment, Settings as SettingsIcon, Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
+import { Dashboard as DashboardIcon, Assessment, Settings as SettingsIcon, Menu as MenuIcon, ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import { Route } from 'react-router-dom'
 
 import { colours, sizes } from '../Common/UISettings';
 
 import UserProfile from '../Components/UserProfile';
-import DashboardComponent from '../Components/Dashboard';
+import Dashboard from './Dashboard';
 import Reports from '../Components/Reports';
 import Settings from './Settings';
 
@@ -152,7 +152,7 @@ const SideMenu = props => {
           </div>
           <Divider />
           <List aria-label="main functionality">
-            <ListItemLink to={props.match.url + "/dashboard"} primary="Dashboard" icon={<Dashboard />} />
+            <ListItemLink to={props.match.url + "/dashboard"} primary="Dashboard" icon={<DashboardIcon />} />
             <ListItemLink to={props.match.url + "/reports"} primary="Reports" icon={<Assessment />} />
             <ListItemLink to={props.match.url + "/settings"} primary="Settings" icon={<SettingsIcon />} />
           </List>
@@ -167,7 +167,7 @@ const SideMenu = props => {
           [classes.contentShift]: open,
         })}>
             <div className={classes.drawerHeader} />
-            <Route path={props.match.url + '/dashboard'} component={DashboardComponent} />
+            <Route path={props.match.url + '/dashboard'} component={Dashboard} />
             <Route path={props.match.url + '/reports'} component={Reports} />
             <Route path={props.match.url + '/settings'} component={Settings} />
             <Route path={props.match.url + '/profile'} component={UserProfile} />

@@ -3,7 +3,6 @@ const trackingAPI = require('../apis/tracking-api');
 const { daysOfWeek } = require('./GeneralUtils');
 
 const getGeneralSettings = async () => {
-    console.log(getUserId());
     const settings = trackingAPI(getToken()).service('settings');
     const response = await settings.find({
         userId: getUserId()
@@ -57,7 +56,7 @@ const getTimeDisplay = (daysAndTime) => {
     }
     const groupedTime = daysOfWeek.map(dow => {
         const allTimes = daysAndTime.filter(d => d.day === dow.value);
-        const mappedTime = allTimes.map(at => `${at.startTime} - ${at.endTime}`).join(', ');;
+        const mappedTime = allTimes.map(at => `${at.startTime} - ${at.endTime}`).join(', ');
         return {
             day: dow.value,
             dayDescription: dow.day,
@@ -114,13 +113,79 @@ const deleteProjectCategory = async(generalSettings, categoryDescription, workRe
     return response;
 }
 
-const getProjectSettings = async () => {
+const getProjectSettings = async (searchTerms) => {
     const projects = trackingAPI(getToken()).service('projects');
     const response = await projects.find({
-        userId: getUserId()
+        query: {
+            userId: getUserId(),
+            ...searchTerms
+        }
+    });
+    return response.data;
+};
+
+const updateProject = async (project) => {   
+    const projects = trackingAPI(getToken()).service('projects'); 
+    if (!project._id) {
+        const response = await projects.create({
+            userId: getUserId(),
+            name: project.name,
+            category: project.category,
+            workRelated: project.workRelated,
+            taskTypes: !project.taskTypes ? [] : project.taskTypes.map(t => { return { taskDescription: t.taskDescription, requireAdditionalDescription: t.requireAdditionalDescription }; })
+        });
+        return response;
+    } else {
+        const response = await projects.patch(project._id, {
+            name: project.name,
+            category: project.category,
+            workRelated: project.workRelated,
+            taskTypes: !project.taskTypes ? [] : project.taskTypes.map(t => { return { taskDescription: t.taskDescription, requireAdditionalDescription: t.requireAdditionalDescription }; })
+        });
+        return response;
+    }
+}
+
+const deleteProject = async (project) => {
+    const projects = trackingAPI(getToken()).service('projects');
+    const response = await projects.remove(project._id);
+    return response;
+}
+
+const getOngoingTracks = async() => {
+    const tracks = trackingAPI(getToken()).service('track');
+    const response = await tracks.find({
+        query: {
+            userId: getUserId(),
+            inProgress: true
+        }
+    });
+    return response.data;
+}
+
+const startTrack = async(trackSettings) => {
+    const tracks = trackingAPI(getToken()).service('track');
+    const response = await tracks.create({
+        userId: getUserId(),
+        inProgress: true,
+        start: Date.now(),
+        category: trackSettings.category,
+        project: trackSettings.project,
+        task: trackSettings.task,
+        requireDescription: trackSettings.requireDescription,
+        workRelated: trackSettings.workRelated
     });
     return response;
-};
+}
+
+const endTrack = async(track) => {    
+    const tracks = trackingAPI(getToken()).service('track');
+    const response = await tracks.patch(track._id, {
+        end: Date.now(),
+        inProgress: false
+    });
+    return response;
+}
 
 module.exports = {
     getGeneralSettings,
@@ -130,5 +195,10 @@ module.exports = {
     updateBreaks,
     createNewProjectCategory,
     deleteProjectCategory,
-    getProjectSettings
+    getProjectSettings,
+    updateProject,
+    deleteProject,
+    getOngoingTracks,
+    startTrack,
+    endTrack
 };
