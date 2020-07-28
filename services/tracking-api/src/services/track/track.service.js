@@ -3,7 +3,7 @@ const { Track } = require('./track.class');
 const createModel = require('../../models/track.model');
 const hooks = require('./track.hooks');
 
-module.exports = function (app) {
+module.exports = function(app) {
   const options = {
     Model: createModel(app),
     paginate: app.get('paginate')
